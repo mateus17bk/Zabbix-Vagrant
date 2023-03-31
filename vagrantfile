@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+    # Setting up the quantity of VM's will be configured, in this case, 1 to 4.
+        (1..3).each do |i| 
+            # Using the number of VM "i" to compose it VirtualBox name.
+            config.vm.define "zabbix_#{i}" do |zabbix|
+                zabbix.vm.box = "debian/bullseye64"
+                # Using the number of VM "i" to compose it hostname
+                zabbix.vm.hostname = "zabbix#{i}"
+    #           zabbix.vm.provision "routeros_command", name: "Teste", command: "/system resource print"
+                zabbix.vm.network "public_network", bridge: "enp3s0"
+    # 	        zabbix.vm.network "private_network", virtualbox__intnet: "lan#{i}", auto_config: false
+                zabbix.vm.provider "virtualbox" do |v| 
+                    # Setting up custom settings
+                    v.memory    = 1024
+                    v.name      = "zabbix#{i}"
+                end
+            end
+        end 
+end

@@ -1,0 +1,1 @@
+{"dependencies":[["vagrant-disksize",["= 0.1.3"]],["vagrant-routeros",["= 0.5.0"]],["vagrant-winnfsd",["= 1.4.0"]]],"checksum":"4bd74b94e8d85a7ab4e09b0eb9b43631a8a138bde585e60f0239295c17e43cc1","vagrant_version":"2.2.10"}
