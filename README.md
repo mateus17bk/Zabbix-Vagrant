@@ -208,7 +208,7 @@ MariaDB [(none)]> quit;
 
 **Popular o Banco de Dados**
 
-`cat /usr/share/zabbix-sql-scripts/mysql/proxy.sql | mysql --default-character-set=utf8mb4 -uzabbix -p'password' zabbix`
+`cat /usr/share/zabbix-sql-scripts/mysql/proxy.sql | mysql --default-character-set=utf8mb4 -uzabbix -p'Seu password' zabbix`
 
 **Editar o arquivo de configuração do zabbix proxy (Use CTRL+w no Nano para pesquisar):** 
  ~~~sql
