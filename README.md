@@ -188,8 +188,8 @@ mysql_secure_installation
 	Enter current password for root (enter for none): Press Enter
 	Switch to unix_socket authentication [Y/n] y
 	Change the root password? [Y/n] y
-	New password: <Enter root DB password>
-	Re-enter new password: <Repeat root DB password>
+	New password: Seu password
+	Re-enter new password: Seu password
 	Remove anonymous users? [Y/n]: Y
 	Disallow root login remotely? [Y/n]: Y
 	Remove test database and access to it? [Y/n]:  Y
@@ -201,7 +201,7 @@ mysql_secure_installation
 ~~~sql
 mysql -u root -p
 MariaDB [(none)]> create database zabbix character set utf8 collate utf8_bin;
-MariaDB [(none)]> grant all privileges on zabbix.* to zabbix@localhost identified by 'password';
+MariaDB [(none)]> grant all privileges on zabbix.* to zabbix@localhost identified by 'Seu password';
 MariaDB [(none)]> set global log_bin_trust_function_creators = 1;
 MariaDB [(none)]> quit; 
 ~~~
@@ -215,7 +215,7 @@ MariaDB [(none)]> quit;
  nano /etc/zabbix/zabbix_proxy.conf
   -> DBHost ->> localhost
   -> DBName ->>zabbix
-  -> DBPassword ->>P@ssw0rd
+  -> DBPassword ->>Seu password
   -> Hostname ->>zabbixproxy
   -> Server ->>IP-do-zabbixserver
 ~~~
