@@ -1,5 +1,7 @@
 # Zabbix-Vagrant
 
+# Instalação com servidor Zabbix
+
 Neste projeto estou subindo 3 máquinas virtuais com **Vagrant** um deles será o servidor, o proxy e o cliente eles são monitorado, mas agora vou está ensinando a subir as máquinas e instalar o servidor **Zabbix**
 
 Primeiro vamos criar o `Vagrantfile` em nosso Vscode utilizando o terminal para fazer o `vagrant up` para criar nossa máquinas virtuais com o sistema operacional Debian 11
@@ -147,6 +149,92 @@ URL: http://server_ip_or_name/zabbix
 User: Admin
 Senha: zabbix
 ~~~
+
+# Instalação do Poroxy 
+
+**Atualizar o sitema operacional**
+`apt update && apt upgrade`
+
+**Para não ter que entrar como superusuário e e ter que repetir sempre o processo utilize o comando**
+
+`nano /etc/profile` 
+editamos para `PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/games"`
+
+
+**Baixar o Zabbix no Debian***
+wget https://repo.zabbix.com/zabbix/6.4/debian/pool/main/z/zabbix-release/zabbix-release_6.4-1+debian11_all.deb
+
+**Preparar o pacote para instalação**
+ 
+ `dpkg -i zabbix-release_6.4-1+debian11_all.deb`
+ 
+ `apt update`
+
+**Instalar os componentes**
+
+`apt -y install zabbix-proxy-mysql zabbix-sql-scripts`
+
+**Instalar o MariaDB para armazenar todos os dados do Zabbix. O MariaDB substitui o MySQL nas distribuições atuais do Debian.**
+
+`apt install mariadb-server mariadb-client`
+
+**Verificar se o MariaDB está rodando**
+`systemctl status mariadb`
+
+**Proteger a instalação do MariaDB**
+
+~~~sql
+mysql_secure_installation
+	Enter current password for root (enter for none): Press Enter
+	Switch to unix_socket authentication [Y/n] y
+	Change the root password? [Y/n] y
+	New password: <Enter root DB password>
+	Re-enter new password: <Repeat root DB password>
+	Remove anonymous users? [Y/n]: Y
+	Disallow root login remotely? [Y/n]: Y
+	Remove test database and access to it? [Y/n]:  Y
+	Reload privilege tables now? [Y/n]:  Y
+~~~~
+
+**Criar o banco de dados par ao Zabbix**
+
+~~~sql
+mysql -u root -p
+MariaDB [(none)]> create database zabbix character set utf8 collate utf8_bin;
+MariaDB [(none)]> grant all privileges on zabbix.* to zabbix@localhost identified by 'password';
+MariaDB [(none)]> set global log_bin_trust_function_creators = 1;
+MariaDB [(none)]> quit; 
+~~~
+
+**Popular o Banco de Dados**
+`cat /usr/share/zabbix-sql-scripts/mysql/proxy.sql | mysql --default-character-set=utf8mb4 -uzabbix -p'password' zabbix`
+
+**Editar o arquivo de configuração do zabbix proxy (Use CTRL+w no Nano para pesquisar):** 
+ ~~~sql
+ nano /etc/zabbix/zabbix_proxy.conf
+  -> DBHost ->> localhost
+  -> DBName ->>zabbix
+  -> DBPassword ->>P@ssw0rd
+  -> Hostname ->>zabbixproxy
+  -> Server ->>IP-do-zabbixserver
+~~~
+
+**Iniciar o proxy**
+
+`systemctl restart zabbix-proxy`
+
+**Colocar o serviço em automático**
+
+`systemctl enable zabbix-proxy`
+
+**Registrar o Proxy no Servidor Zabbix**
+~~~yml
+Administração->Proxies
+
+Ver se deu tudo certo, depois do registro no servidor: tail -f /var/log/zabbix/zabbix_proxy.log
+~~~
+
+
 
 
 
