@@ -161,7 +161,7 @@ Senha: zabbix
 editamos para `PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/games"`
 
 
-**Baixar o Zabbix no Debian***
+**Baixar o Zabbix no Debian**
 wget https://repo.zabbix.com/zabbix/6.4/debian/pool/main/z/zabbix-release/zabbix-release_6.4-1+debian11_all.deb
 
 **Preparar o pacote para instalação**
