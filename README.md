@@ -53,10 +53,6 @@ Agora vamos acessar uma das máquinas, damos um `vagrant ssh zabbix_1` no meu ca
 `nano /etc/profile` 
 editamos para `PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/games"`
 
-
-**Para não ter que entrar como superusuário e e ter que repetir sempre o processo utilize o comando:
- echo "PATH="/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/local/games"" >> /etc/environment 
-
 **Instalar o Apache , o PHP e alguns módulos PHP necessários**
 
 `apt install -y apache2 apache2-bin apache2-data apache2-utils libapache2-mod-php libapache2-mod-php7.4 libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap libcurl4 libgd3 liblua5.3-0 libonig5 libsodium23 libxpm4 libxslt1.1 php php-bcmath php-common php-gd php-ldap php-mbstring php-mysql php-xml php7.4 php7.4-bcmath php7.4-cli php7.4-common php7.4-gd php7.4-json php7.4-ldap php7.4-mbstring php7.4-mysql php7.4-opcache php7.4-readline php7.4-xml ssl-cert`
